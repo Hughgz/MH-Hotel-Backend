@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 @Data
 public class BookingRoomDTO {
-    private Long id;
+    private int id;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
     private String clientName;
@@ -18,7 +18,7 @@ public class BookingRoomDTO {
     private String bookingConfirmationCode;
     private RoomDTO room;
 
-    public BookingRoomDTO(Long id, LocalDate checkInDate, LocalDate checkOutDate,
+    public BookingRoomDTO(int id, LocalDate checkInDate, LocalDate checkOutDate,
                            String bookingConfirmationCode) {
         this.id = id;
         this.checkInDate = checkInDate;

@@ -1,15 +1,16 @@
 package com.example.MH_Hotel_Backend.service;
 
+import com.example.MH_Hotel_Backend.dtos.RoomDTO;
 import com.example.MH_Hotel_Backend.exception.InternalServerException;
 import com.example.MH_Hotel_Backend.exception.ResourceNotFoundException;
 import com.example.MH_Hotel_Backend.model.Room;
 import com.example.MH_Hotel_Backend.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.sql.rowset.serial.SerialBlob;
-import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Blob;
@@ -68,7 +69,7 @@ public class RoomService implements IRoomService {
 
     @Override
     public Room updateRoom(int roomId, String roomType, BigDecimal roomPrice, byte[] photoBytes) {
-        Room room = repository.findById(roomId).get();
+        Room room = repository.findById(roomId).orElseThrow(() -> new RuntimeException("Room does not exists"));
         if (roomType != null) room.setRoomType(roomType);
         if (roomPrice != null) room.setRoomPrice(roomPrice);
         if (photoBytes != null && photoBytes.length > 0) {
@@ -93,5 +94,10 @@ public class RoomService implements IRoomService {
     @Override
     public List<Room> getAvailableRooms(LocalDate checkInDate, LocalDate checkOutDate, String roomType) {
         return repository.findAvailableRoomsByDatesAndType(checkInDate, checkOutDate, roomType);
+    }
+
+    @Override
+    public RoomDTO convert(Room room) {
+        return new ModelMapper().map(room, RoomDTO.class);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.MH_Hotel_Backend.service;
 
+import com.example.MH_Hotel_Backend.dtos.RoomDTO;
 import com.example.MH_Hotel_Backend.model.Room;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
@@ -25,4 +26,6 @@ public interface IRoomService {
     Optional<Room> getRoomById(int roomId);
 
     List<Room> getAvailableRooms(LocalDate checkInDate, LocalDate checkOutDate, String roomType);
+
+    RoomDTO convert(Room room);
 }
